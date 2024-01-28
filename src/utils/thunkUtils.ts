@@ -12,7 +12,7 @@ export class ThunkUtils {
     }
     return ThunkUtils.instance;
   }
-  readonly P1stonThunkOperation = ThunkOperation;
+  readonly AppThunkOperation = ThunkOperation;
 
   private constructor() {}
 

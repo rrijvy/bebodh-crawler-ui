@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,6 +15,8 @@ import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import DefaultTheme from "@/theme";
 import Copyright from "@/components/copyright";
+import { signIn } from "next-auth/react";
+import { UIRoutes } from "@/core/routes";
 
 export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +24,12 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
+      password: data.get("password"),
+    });
+
+    signIn("credentials", {
+      redirect: false,
+      username: data.get("email"),
       password: data.get("password"),
     });
   };
