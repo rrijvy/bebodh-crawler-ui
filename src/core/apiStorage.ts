@@ -8,7 +8,7 @@ export class ApiStorage {
   } = {};
 
   private _storeReferenceToWindow(): void {
-    window.apiStorage = this._objects;
+    globalThis.apiStorage = this._objects;
   }
 
   constructor() {

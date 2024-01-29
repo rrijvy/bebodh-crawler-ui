@@ -50,7 +50,7 @@ const Config = {
   LeadTimeWindowMaximunDays: 9999,
 };
 
-export const P1stonConstants = {
+export const AppConstants = {
   HttpHeaders,
   HtmlIds,
   HtmlClasses,
