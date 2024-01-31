@@ -15,11 +15,11 @@ import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import DefaultTheme from "@/theme";
 import Copyright from "@/components/copyright";
-import { signIn } from "next-auth/react";
-import { UIRoutes } from "@/core/routes";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { signIn } from "@/auth";
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -27,8 +27,9 @@ export default function SignIn() {
       password: data.get("password"),
     });
 
-    signIn("credentials", {
-      redirect: false,
+    await signIn("credentials", {
+      redirect: true,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
       username: data.get("email"),
       password: data.get("password"),
     });
