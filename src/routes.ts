@@ -24,3 +24,10 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+
+export const apiRouteBaseUrl = process.env.API_URL;
+
+export const apiRoutes = {
+  login: `${apiRouteBaseUrl}/Auth/SignIn`,
+  register: `${apiRouteBaseUrl}/Auth/Register`,
+};

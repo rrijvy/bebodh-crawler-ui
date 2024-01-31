@@ -1,5 +1,4 @@
 "use client";
-
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,27 +11,43 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { ThemeProvider } from "@mui/material/styles";
 import DefaultTheme from "@/theme";
 import Copyright from "@/components/copyright";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { signIn } from "@/auth";
+import { ThemeProvider } from "@mui/material/styles";
+import { Login } from "@/app/actions/login";
 
 export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
 
-    await signIn("credentials", {
-      redirect: true,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
-      username: data.get("email"),
-      password: data.get("password"),
-    });
+    Login(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // signIn("credentials", {
+    //   redirect: true,
+    //   redirectTo: DEFAULT_LOGIN_REDIRECT,
+    //   username: data.get("email"),
+    //   password: data.get("password"),
+    // })
+    //   .then((res) => {
+    //     console.log("after login", res);
+    //   })
+    //   .catch((error) => {
+    //     if (error instanceof AuthError) {
+    //       switch (error.type) {
+    //         case "CredentialsSignin":
+    //           return { error: "Invalid credentials!" };
+    //         default:
+    //           return { error: "Something went wrong!" };
+    //       }
+    //     }
+    //     throw error;
+    //   });
   };
 
   return (
@@ -85,7 +100,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href='/register' variant='body2'>
+                <Link href='/auth/register' variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
