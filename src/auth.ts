@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiRoutes } from "./routes";
 import { LoginResponseSchema } from "./models/loginResponseSchema";
@@ -11,29 +11,32 @@ export const {
 } = NextAuth({
   providers: [
     CredentialsProvider({
-      async authorize(credentials, req) {
+      authorize: async (credentials, req) => {
         if (!credentials) return null;
         const { username, password } = credentials;
         if (username && password) {
           try {
-            const formData = new FormData();
-            formData.append("username", username as string);
-            formData.append("password", password as string);
+            var rowBody = JSON.stringify({
+              username: username,
+              password: password,
+            });
+
             const response = await fetch(apiRoutes.login, {
               method: "POST",
-              mode: "cors",
-              cache: "no-cache",
-              credentials: "same-origin",
               headers: {
                 "Content-Type": "application/json",
               },
               redirect: "follow",
-              referrerPolicy: "no-referrer",
-              body: formData,
+              body: rowBody,
             });
-            if (response) return response;
-            else return null;
+            if (response) {
+              const result = (await response.json()) as LoginResponseSchema;
+              console.log("debug result", result);
+              if (result) return result;
+              else return null;
+            } else return null;
           } catch (error) {
+            console.log("debug error", error);
             return null;
           }
         }
@@ -50,11 +53,13 @@ export const {
   },
   callbacks: {
     async jwt(param) {
-      // console.log("token", param.token);
+      console.log("token", param.token);
       return param.token;
     },
     async session(param) {
+      console.log("token", param.session);
       return param.session;
     },
   },
+  debug: true,
 });

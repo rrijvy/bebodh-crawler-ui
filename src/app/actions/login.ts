@@ -1,16 +1,17 @@
 "use server";
 
 import { signIn } from "@/auth";
+import { LoginRequestSchema } from "@/models/loginRequestSchema";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 
-export const Login = async (data: FormData) => {
+export const Login = async (requestSchema: LoginRequestSchema) => {
   try {
     await signIn("credentials", {
       redirect: true,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
-      username: data.get("email"),
-      password: data.get("password"),
+      username: requestSchema.username,
+      password: requestSchema.password,
     });
   } catch (error) {
     if (error instanceof AuthError) {

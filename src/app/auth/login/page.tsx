@@ -15,10 +15,16 @@ import DefaultTheme from "@/theme";
 import Copyright from "@/components/copyright";
 import { ThemeProvider } from "@mui/material/styles";
 import { Login } from "@/app/actions/login";
+import { LoginRequestSchema } from "@/models/loginRequestSchema";
 
 export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    const data = new FormData(event.currentTarget);
+    const formData = new FormData(event.currentTarget);
+
+    const data: LoginRequestSchema = {
+      username: (formData.get("email") ?? "") as string,
+      password: (formData.get("password") ?? "") as string,
+    };
 
     Login(data)
       .then((res) => {
