@@ -33,27 +33,6 @@ export default function SignIn() {
       .catch((err) => {
         console.log(err);
       });
-
-    // signIn("credentials", {
-    //   redirect: true,
-    //   redirectTo: DEFAULT_LOGIN_REDIRECT,
-    //   username: data.get("email"),
-    //   password: data.get("password"),
-    // })
-    //   .then((res) => {
-    //     console.log("after login", res);
-    //   })
-    //   .catch((error) => {
-    //     if (error instanceof AuthError) {
-    //       switch (error.type) {
-    //         case "CredentialsSignin":
-    //           return { error: "Invalid credentials!" };
-    //         default:
-    //           return { error: "Something went wrong!" };
-    //       }
-    //     }
-    //     throw error;
-    //   });
   };
 
   return (

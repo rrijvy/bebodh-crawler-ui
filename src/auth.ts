@@ -1,4 +1,4 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiRoutes } from "./routes";
 import { LoginResponseSchema } from "./models/loginResponseSchema";
@@ -16,27 +16,18 @@ export const {
         const { username, password } = credentials;
         if (username && password) {
           try {
-            var rowBody = JSON.stringify({
-              username: username,
-              password: password,
-            });
-
             const response = await fetch(apiRoutes.login, {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: { "Content-Type": "application/json" },
               redirect: "follow",
-              body: rowBody,
+              body: JSON.stringify({ username, password }),
             });
             if (response) {
               const result = (await response.json()) as LoginResponseSchema;
-              console.log("debug result", result);
               if (result) return result;
               else return null;
             } else return null;
           } catch (error) {
-            console.log("debug error", error);
             return null;
           }
         }
@@ -53,11 +44,18 @@ export const {
   },
   callbacks: {
     async jwt(param) {
-      console.log("token", param.token);
+      if (param.user.isSuccess) {
+        param.token.sub = param.user.id;
+        param.token.token = param.user.message;
+        param.token.name = param.user.name;
+        param.token.email = param.user.email;
+        if (param.user.expiresAt) {
+          param.token.expiresAt = new Date(param.user.expiresAt).getTime() / 1000;
+        }
+      }
       return param.token;
     },
     async session(param) {
-      console.log("token", param.session);
       return param.session;
     },
   },
