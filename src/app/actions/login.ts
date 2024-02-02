@@ -7,12 +7,14 @@ import { AuthError } from "next-auth";
 
 export const Login = async (requestSchema: LoginRequestSchema) => {
   try {
-    await signIn("credentials", {
+    const userData = await signIn("credentials", {
       redirect: true,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
       username: requestSchema.username,
       password: requestSchema.password,
     });
+
+    return { success: true, userData };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

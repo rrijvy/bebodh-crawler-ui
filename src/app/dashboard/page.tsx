@@ -20,6 +20,7 @@ import Copyright from "@/components/copyright";
 import { Table, TableHead, TableRow, TableCell, TableBody, List } from "@mui/material";
 import DefaultTheme from "@/theme";
 import { MainListItems, SecondaryListItems } from "@/components/sidenav";
+import { useSession } from "next-auth/react";
 
 const drawerWidth: number = 240;
 
@@ -70,6 +71,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 }));
 
 export default function Dashboard() {
+  const { data: session } = useSession();
+  console.log("use session", session)
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);

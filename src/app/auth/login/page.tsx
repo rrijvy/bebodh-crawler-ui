@@ -19,6 +19,8 @@ import { LoginRequestSchema } from "@/models/loginRequestSchema";
 
 export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
 
     const data: LoginRequestSchema = {
@@ -26,7 +28,7 @@ export default function SignIn() {
       password: (formData.get("password") ?? "") as string,
     };
 
-    Login(data)
+    await Login(data)
       .then((res) => {
         console.log(res);
       })

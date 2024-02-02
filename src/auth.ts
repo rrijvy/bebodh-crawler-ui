@@ -24,8 +24,14 @@ export const {
             });
             if (response) {
               const result = (await response.json()) as LoginResponseSchema;
-              if (result) return result;
-              else return null;
+              if (result && result.isSuccess) {
+                return {
+                  ...result,
+                  id: result.user?.id,
+                  name: `${result.user?.firstName} ${result.user?.lastName}`,
+                  email: result.user?.email,
+                };
+              } else return null;
             } else return null;
           } catch (error) {
             return null;
@@ -44,7 +50,8 @@ export const {
   },
   callbacks: {
     async jwt(param) {
-      if (param.user.isSuccess) {
+      console.log("jwt", param);
+      if (param.user && param.user.isSuccess) {
         param.token.sub = param.user.id;
         param.token.token = param.user.message;
         param.token.name = param.user.name;
@@ -59,13 +66,17 @@ export const {
     async session(param) {
       if ("token" in param) {
         param.session.token = param.token.token;
+      }
+
+      if ("user" in param) {
         if (param.session.user) {
-          param.session.user.id = param.token.sub;
-          param.session.user.name = param.token.name;
-          param.session.user.email = param.token.email;
-          param.session.username = param.token.username;
+          param.session.user.id = param.user.id;
+          param.session.user.name = param.user.name;
+          param.session.user.email = param.user.email;
+          param.session.username = param.user.user?.userName;
         }
       }
+
       return param.session;
     },
   },
