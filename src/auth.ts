@@ -49,6 +49,7 @@ export const {
         param.token.token = param.user.message;
         param.token.name = param.user.name;
         param.token.email = param.user.email;
+        param.token.username = param.user.user?.userName;
         if (param.user.expiresAt) {
           param.token.expiresAt = new Date(param.user.expiresAt).getTime() / 1000;
         }
@@ -56,6 +57,15 @@ export const {
       return param.token;
     },
     async session(param) {
+      if ("token" in param) {
+        param.session.token = param.token.token;
+        if (param.session.user) {
+          param.session.user.id = param.token.sub;
+          param.session.user.name = param.token.name;
+          param.session.user.email = param.token.email;
+          param.session.username = param.token.username;
+        }
+      }
       return param.session;
     },
   },
