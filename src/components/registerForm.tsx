@@ -7,7 +7,11 @@ import { Form, FormField, FormItem, FormLabel, FormControl } from "./ui/form";
 import { Input } from "./ui/input";
 import { RegisterRequestSchema } from "@/models/registerRequestSchema";
 
-export const RegisterForm = () => {
+type Props = {
+  handleSubmit: (data: RegisterRequestSchema) => void;
+};
+
+export const RegisterForm = (props: Props) => {
   const form = useForm<RegisterRequestSchema>({
     defaultValues: {
       email: "",
@@ -17,7 +21,7 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<RegisterRequestSchema> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<RegisterRequestSchema> = (data) => props.handleSubmit(data);
 
   return (
     <Form {...form}>

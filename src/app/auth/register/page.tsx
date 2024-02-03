@@ -1,21 +1,24 @@
+import { Register } from "@/app/actions/register";
 import { RegisterForm } from "@/components/registerForm";
 import { Card, CardContent } from "@/components/ui/card";
+import { RegisterRequestSchema } from "@/models/registerRequestSchema";
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const handleSubmit = (data: RegisterRequestSchema) => {
+    Register(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <div className="w-6/12 p-10 mx-auto">
       <Card>
         <CardContent className="pt-8">
-          <RegisterForm />
+          <RegisterForm handleSubmit={handleSubmit} />
         </CardContent>
       </Card>
     </div>

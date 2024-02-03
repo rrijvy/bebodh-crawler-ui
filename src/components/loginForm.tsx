@@ -7,7 +7,11 @@ import { Input } from "./ui/input";
 import { LoginRequestSchema } from "@/models/loginRequestSchema";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export const LoginForm = () => {
+type Props = {
+  handleSubmit: (data: LoginRequestSchema) => void;
+};
+
+export const LoginForm = (props: Props) => {
   const form = useForm<LoginRequestSchema>({
     defaultValues: {
       username: "",
@@ -15,7 +19,7 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginRequestSchema> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginRequestSchema> = (data) => props.handleSubmit(data);
 
   return (
     <Form {...form}>

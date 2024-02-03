@@ -3,7 +3,7 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/", "/auth/new-verification"];
+export const publicRoutes = ["/dashboard"];
 
 /**
  * An array of routes that are used for authentication
@@ -23,7 +23,7 @@ export const apiAuthPrefix = "/api/auth";
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+export const DEFAULT_LOGIN_REDIRECT = "/";
 
 export const apiRouteBaseUrl = process.env.API_URL;
 
@@ -31,4 +31,3 @@ export const apiRoutes = {
   login: `${apiRouteBaseUrl}/Auth/SignIn`,
   register: `${apiRouteBaseUrl}/Auth/Register`,
 };
- 
