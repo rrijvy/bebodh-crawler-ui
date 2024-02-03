@@ -31,3 +31,4 @@ export const apiRoutes = {
   login: `${apiRouteBaseUrl}/Auth/SignIn`,
   register: `${apiRouteBaseUrl}/Auth/Register`,
 };
+ 
