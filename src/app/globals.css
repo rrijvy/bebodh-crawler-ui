@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.body-wrapper {
+  width: calc(100% - 220px);
+  float: right;
+}

@@ -8,7 +8,7 @@ import { UIRoutes } from "@/core/routes";
 
 export const SideNav = () => {
   return (
-    <div className="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center bg-gray-900 text-white">
+    <div className="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[220px] overflow-y-auto text-center bg-gray-900 text-white">
       <NavItemSingle url={UIRoutes.Dashboard} text="Dashboard" />
       <NavItemMultiple
         text="Amazon Crawler"

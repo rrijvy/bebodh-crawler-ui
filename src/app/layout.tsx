@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SideNav />
-        {children}
+        <div className="body-wrapper">{children}</div>
       </body>
     </html>
   );

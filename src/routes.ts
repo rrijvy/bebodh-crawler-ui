@@ -30,4 +30,5 @@ export const apiRouteBaseUrl = process.env.API_URL;
 export const apiRoutes = {
   login: `${apiRouteBaseUrl}/Auth/SignIn`,
   register: `${apiRouteBaseUrl}/Auth/Register`,
+
 };
