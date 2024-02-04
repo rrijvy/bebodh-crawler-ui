@@ -42,7 +42,7 @@ type NavItemsProps = {
 const NavItemMultiple = (props: NavItemsProps) => {
   return (
     <Accordion type="single" collapsible>
-      <AccordionItem value="item-1">
+      <AccordionItem className={cn("border-none")} value={props.text}>
         <AccordionTrigger className={cn("py-2 text-sm font-normal hover:no-underline")}>{props.text}</AccordionTrigger>
         <AccordionContent className="text-left">
           <ul className="pl-3">
