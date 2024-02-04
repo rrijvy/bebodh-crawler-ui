@@ -50,7 +50,6 @@ export const {
   },
   callbacks: {
     async jwt(param) {
-      console.log("jwt", param);
       if (param.user && param.user.isSuccess) {
         param.token.sub = param.user.id;
         param.token.token = param.user.message;
@@ -67,7 +66,6 @@ export const {
       if ("token" in param) {
         param.session.token = param.token.token;
       }
-
       if ("user" in param) {
         if (param.session.user) {
           param.session.user.id = param.user.id;
@@ -76,7 +74,6 @@ export const {
           param.session.username = param.user.user?.userName;
         }
       }
-
       return param.session;
     },
   },
