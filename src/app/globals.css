@@ -6,3 +6,7 @@
   width: calc(100% - 220px);
   float: right;
 }
+
+.z-9999 {
+  z-index: 9999 !important;
+}
