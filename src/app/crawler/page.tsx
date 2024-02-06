@@ -6,8 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
 const Crawler = async () => {
-  const session = await auth();
-  console.log("session token", session?.token);
   return (
     <ReduxStoreProvider>
       <div className="w-4/12 pt-5 mx-auto">

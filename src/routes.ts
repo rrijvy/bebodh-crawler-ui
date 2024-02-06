@@ -3,7 +3,7 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/dashboard"];
+export const publicRoutes = ["/dashboard", "/proxyScheduler"];
 
 /**
  * An array of routes that are used for authentication
@@ -30,5 +30,4 @@ export const apiRouteBaseUrl = process.env.API_URL;
 export const apiRoutes = {
   login: `${apiRouteBaseUrl}/Auth/SignIn`,
   register: `${apiRouteBaseUrl}/Auth/Register`,
-
 };
