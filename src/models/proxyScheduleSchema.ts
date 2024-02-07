@@ -29,7 +29,7 @@ export enum MonthlySelectionType {
   OnREcurrenceWeekDay,
 }
 
-export interface ProxySchedule {
+export interface ProxyScheduleSchema {
   recurrenceType?: RecurrenceType;
   repeatEvery?: number;
   weekSpecificDays?: WeekDay[];

@@ -5,9 +5,13 @@ import { TimeZoneDataType, TimeZonePresetData, TimeDataType, TimePresetData } fr
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { ProxySchedule, RecurrenceType } from "@/models/proxyScheduleSchema";
+import { ProxyScheduleSchema, RecurrenceType } from "@/models/proxyScheduleSchema";
+import { useAppDispatch } from "@/store/store";
+import { ThunkAddOrUpdateProxyRetriverSchedule } from "@/store/slices/apiSlices/AddOrUpdateProxyRetriverSchedule";
 
 export const ProxyScheduleEditor = () => {
+  const dispatch = useAppDispatch();
+
   const [timeZonePresetData] = useState<TimeZoneDataType[]>(TimeZonePresetData);
   const [timePresetData] = useState<TimeDataType[]>(TimePresetData);
 
@@ -27,7 +31,7 @@ export const ProxyScheduleEditor = () => {
     }));
   }, [timeZonePresetData]);
 
-  const [state, setState] = useState<ProxySchedule>({ recurrenceType: RecurrenceType.Daily, repeatEvery: 1 });
+  const [state, setState] = useState<ProxyScheduleSchema>({ recurrenceType: RecurrenceType.Daily, repeatEvery: 1 });
   const [time, setTime] = useState<TimeDataType>();
   const [timeZone, setTimeZone] = useState<TimeZoneDataType>();
 
@@ -37,13 +41,18 @@ export const ProxyScheduleEditor = () => {
   };
 
   const onChangeRepeatEvery = (value: string) => {
-    setState({ ...state, repeatEvery: Number(value) });
+    setState({ ...state, repeatEvery: parseInt(value) });
   };
 
   const onSelectTime = (value: string) => {
     const item = TimePresetData.find((x) => x.value === value);
     if (item) {
       setTime(item);
+      setState({
+        ...state,
+        hour: parseInt(item.Hour),
+        minute: parseInt(item.Minute),
+      });
     }
   };
 
@@ -51,7 +60,15 @@ export const ProxyScheduleEditor = () => {
     const item = TimeZonePresetData.find((x) => x.StandardName.toLowerCase() === value);
     if (item) {
       setTimeZone(item);
+      setState({
+        ...state,
+        timeZone: item.StandardName,
+      });
     }
+  };
+
+  const onSaveClickHandler = () => {
+    dispatch(ThunkAddOrUpdateProxyRetriverSchedule(state));
   };
 
   return (
@@ -118,7 +135,9 @@ export const ProxyScheduleEditor = () => {
         </div>
       </div>
       <div className="pt-2">
-        <Button variant={"outline"}>Save</Button>
+        <Button variant={"outline"} onClick={onSaveClickHandler}>
+          Save
+        </Button>
       </div>
     </div>
   );

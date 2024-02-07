@@ -17,6 +17,8 @@ export const SideNav = () => {
           { text: "Product Review Crawler", url: UIRoutes.Crawler },
         ]}
       />
+      <NavItemSingle url={UIRoutes.ProxyScheduler} text="Proxy Scheduler" />
+
     </div>
   );
 };
