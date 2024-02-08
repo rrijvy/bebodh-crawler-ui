@@ -2,10 +2,10 @@
 
 import { RegisterRequestSchema } from "@/models/registerRequestSchema";
 import { RegisterReponseSchema } from "@/models/registerResponseSchema";
-import { apiRoutes } from "@/routes";
+import { authApiRoutes } from "@/routes";
 
 export const Register = async (requestSchema: RegisterRequestSchema) => {
-  const response = await fetch(apiRoutes.register, {
+  const response = await fetch(authApiRoutes.register, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     redirect: "follow",

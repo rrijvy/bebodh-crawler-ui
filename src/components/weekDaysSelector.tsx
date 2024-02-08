@@ -11,7 +11,7 @@ export const WeekDaysSelector = (props: Props) => {
   return (
     <div>
       {Object.values(EnumWeekDay).map((weekDay) => {
-        const isActive = true
+        const isActive = props.activeWeekDays.some((x) => x === weekDay);
         return (
           <TooltipProvider key={weekDay}>
             <Tooltip>

@@ -30,4 +30,8 @@ export const apiRouteBaseUrl = process.env.API_URL;
 export const apiRoutes = {
   login: `${apiRouteBaseUrl}/Auth/SignIn`,
   register: `${apiRouteBaseUrl}/Auth/Register`,
+  runAmazonCategoryScrapper: `${apiRouteBaseUrl}/AmazonCrawler/RunAmazonCategoryScrapper`,
+  runAmazonReviewScrapper: `${apiRouteBaseUrl}/AmazonCrawler/runAmazonReviewScrapper`,
+  addOrUpdateProxyRetriverSchedule: `${apiRouteBaseUrl}/ProxyScheduler/AddOrUpdateProxyRetriverSchedule`,
+  getAllRecurringSchedules: `${apiRouteBaseUrl}/ProxyScheduler/GetAllRecurringSchedules`,
 };

@@ -5,7 +5,7 @@ import { TimeZoneDataType, TimeZonePresetData, TimeDataType, TimePresetData } fr
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { ProxyScheduleSchema, RecurrenceType } from "@/models/proxyScheduleSchema";
+import { EnumWeekDay, ProxyScheduleSchema, RecurrenceType } from "@/models/proxyScheduleSchema";
 import { useAppDispatch } from "@/store/store";
 import { ThunkAddOrUpdateProxyRetriverSchedule } from "@/store/slices/apiSlices/AddOrUpdateProxyRetriverSchedule";
 import { WeekDaysSelector } from "./weekDaysSelector";
@@ -15,6 +15,25 @@ export const ProxyScheduleEditor = () => {
 
   const [timeZonePresetData] = useState<TimeZoneDataType[]>(TimeZonePresetData);
   const [timePresetData] = useState<TimeDataType[]>(TimePresetData);
+
+  const defaultTime = useMemo(() => {
+    return timePresetData[0];
+  }, [timePresetData]);
+
+  const defaultTimeZone = useMemo(() => {
+    return timeZonePresetData.find((x) => x.StandardName === "GMT Standard Time");
+  }, [timeZonePresetData]);
+
+  const [state, setState] = useState<ProxyScheduleSchema>({
+    recurrenceType: RecurrenceType.Daily,
+    repeatEvery: 1,
+    hour: parseInt(timePresetData[0].Hour),
+    minute: parseInt(timePresetData[0].Minute),
+    timeZone: defaultTimeZone?.StandardName,
+  });
+
+  const [time, setTime] = useState<TimeDataType>(defaultTime);
+  const [timeZone, setTimeZone] = useState<TimeZoneDataType | undefined>(defaultTimeZone);
 
   const timeDropdownItems = useMemo(() => {
     return timePresetData.map((x) => ({
@@ -31,10 +50,6 @@ export const ProxyScheduleEditor = () => {
       value: x.StandardName,
     }));
   }, [timeZonePresetData]);
-
-  const [state, setState] = useState<ProxyScheduleSchema>({ recurrenceType: RecurrenceType.Daily, repeatEvery: 1 });
-  const [time, setTime] = useState<TimeDataType>();
-  const [timeZone, setTimeZone] = useState<TimeZoneDataType>();
 
   const onChangeRecurrenceType = (value: string) => {
     const recurrenceType = RecurrenceType[value as keyof typeof RecurrenceType];
@@ -64,6 +79,21 @@ export const ProxyScheduleEditor = () => {
       setState({
         ...state,
         timeZone: item.StandardName,
+      });
+    }
+  };
+
+  const onWeekDayChangeHandler = (weekDay: EnumWeekDay) => {
+    const isSelected = state.weekSpecificDays?.some((x) => x === weekDay);
+    if (isSelected) {
+      setState({
+        ...state,
+        weekSpecificDays: state.weekSpecificDays?.filter((x) => x !== weekDay),
+      });
+    } else {
+      setState({
+        ...state,
+        weekSpecificDays: [...(state.weekSpecificDays ?? []), weekDay],
       });
     }
   };
@@ -104,10 +134,16 @@ export const ProxyScheduleEditor = () => {
           </div>
         </div>
       </div>
+      {state.recurrenceType === RecurrenceType.Weekly && (
+        <div>
+          <p className="pt-2 pb-2">Repeat On</p>
+          <WeekDaysSelector activeWeekDays={state.weekSpecificDays ?? []} dayOnClick={onWeekDayChangeHandler} />
+        </div>
+      )}
       <div>
         <p className="pt-2 pb-2">At</p>
         <div className="pb-2">
-          <Select onValueChange={onSelectTime} defaultValue={time?.value}>
+          <Select onValueChange={onSelectTime} value={time?.value}>
             <SelectTrigger className="w-full rounded">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
@@ -121,7 +157,7 @@ export const ProxyScheduleEditor = () => {
           </Select>
         </div>
         <div className="pb-2">
-          <Select onValueChange={onSelectTimeZone} defaultValue={timeZone?.StandardName}>
+          <Select onValueChange={onSelectTimeZone} value={timeZone?.StandardName}>
             <SelectTrigger className="w-full rounded">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
@@ -135,7 +171,6 @@ export const ProxyScheduleEditor = () => {
           </Select>
         </div>
       </div>
-      <WeekDaysSelector activeWeekDays={state.weekSpecificDays ?? []} dayOnClick={() => {}} />
       <div className="pt-2">
         <Button variant={"outline"} onClick={onSaveClickHandler}>
           Save

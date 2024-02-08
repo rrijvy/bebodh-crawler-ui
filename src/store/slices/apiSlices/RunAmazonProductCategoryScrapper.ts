@@ -1,7 +1,7 @@
 import { AxiosAuth } from "@/axios";
 import { ClientApiRoutes } from "@/core/routes";
 import { TypeApiResponse } from "@/models/types";
-import { apiRoutes } from "@/routes";
+import { authApiRoutes } from "@/routes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type Response = TypeApiResponse<boolean, string>;
