@@ -4,14 +4,14 @@ export enum RecurrenceType {
   Monthly = "Monthly",
 }
 
-export enum WeekDay {
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday,
-  Sunday,
+export enum EnumWeekDay {
+  Sunday = "Sunday",
+  Monday = "Monday",
+  Tuesday = "Tuesday",
+  Wednesday = "Wednesday",
+  Thursday = "Thursday",
+  Friday = "Friday",
+  Saturday = "Saturday",
 }
 
 export enum MonthlyRecurrenceWeek {
@@ -32,7 +32,7 @@ export enum MonthlySelectionType {
 export interface ProxyScheduleSchema {
   recurrenceType?: RecurrenceType;
   repeatEvery?: number;
-  weekSpecificDays?: WeekDay[];
+  weekSpecificDays?: EnumWeekDay[];
   hour?: number;
   minute?: number;
   timeZone?: string;

@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { ProxyScheduleSchema, RecurrenceType } from "@/models/proxyScheduleSchema";
 import { useAppDispatch } from "@/store/store";
 import { ThunkAddOrUpdateProxyRetriverSchedule } from "@/store/slices/apiSlices/AddOrUpdateProxyRetriverSchedule";
+import { WeekDaysSelector } from "./weekDaysSelector";
 
 export const ProxyScheduleEditor = () => {
   const dispatch = useAppDispatch();
@@ -134,6 +135,7 @@ export const ProxyScheduleEditor = () => {
           </Select>
         </div>
       </div>
+      <WeekDaysSelector activeWeekDays={state.weekSpecificDays ?? []} dayOnClick={() => {}} />
       <div className="pt-2">
         <Button variant={"outline"} onClick={onSaveClickHandler}>
           Save
