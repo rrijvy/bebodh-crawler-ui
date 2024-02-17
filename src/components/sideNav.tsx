@@ -8,17 +8,17 @@ import { UIRoutes } from "@/core/routes";
 
 export const SideNav = () => {
   return (
-    <div className="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[220px] overflow-y-auto text-center bg-gray-900 text-white">
+    <div className="sidebar fixed bottom-0 top-0 w-[220px] overflow-y-auto bg-gray-900 p-2 text-center text-white lg:left-0">
       <NavItemSingle url={UIRoutes.Dashboard} text="Dashboard" />
       <NavItemMultiple
         text="Amazon Crawler"
         subItems={[
-          { text: "Product Category Crawler", url: UIRoutes.Crawler },
-          { text: "Product Review Crawler", url: UIRoutes.Crawler },
+          { text: "Product Category Crawler", url: UIRoutes.AmazonScrapper },
+          { text: "Product Review Crawler", url: UIRoutes.AmazonScrapper },
         ]}
       />
+      <NavItemSingle url={UIRoutes.GoogleMapScrapper} text="Google Map Crawler" />
       <NavItemSingle url={UIRoutes.ProxyScheduler} text="Proxy Scheduler" />
-
     </div>
   );
 };
@@ -30,7 +30,7 @@ type NavItemProps = {
 
 const NavItemSingle = (props: NavItemProps) => {
   return (
-    <h3 className={cn("text-left py-2 text-sm font-normal")}>
+    <h3 className={cn("py-2 text-left text-sm font-normal")}>
       <Link href={props.url}>{props.text}</Link>
     </h3>
   );

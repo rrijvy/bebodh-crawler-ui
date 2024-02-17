@@ -14,5 +14,5 @@ export const ThunkRunAmazonProductReviewScrapper = createAsyncThunk<Response, st
     } catch (error) {
       return { status: 200, error: "error" };
     }
-  }
+  },
 );

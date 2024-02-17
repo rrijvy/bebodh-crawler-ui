@@ -1,23 +1,38 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { RecurringScheduleSchema } from "@/models/recurringScheduleSchema";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { CopyToClipboard } from "./copyToClipboard";
 import { Utility } from "@/utils/utility";
-import SvgTrash from "./../assets/svg/trash.svg";
+import { useAppDispatch } from "@/store/store";
+import { ThunkDeleteProxySchedule } from "@/store/slices/apiSlices/DeleteProxySchedule";
+import { FaTrash } from "react-icons/fa6";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 type Props = {
   schedules: RecurringScheduleSchema[];
 };
 
 export const ProxySchedulerTable = (props: Props) => {
-  const removeSchedule = () => {};
+  const dispatch = useAppDispatch();
+  const [state, setState] = useState(props.schedules);
+  const removeSchedule = (jobId?: string) => {
+    if (jobId)
+      dispatch(ThunkDeleteProxySchedule(jobId))
+        .then(unwrapResult)
+        .then((res) => {
+          if (res.status === 200) {
+            setState(state.filter((x) => x.jobId !== jobId));
+          }
+        });
+  };
   return (
     <div className="overflow-x-auto">
-      <table className="table-auto border-collapse border border-slate-500 w-full overflow-x-auto">
+      <table className="w-full table-auto border-collapse overflow-x-auto border border-slate-500">
         <thead>
           <tr>
+            <th className="border border-slate-600 px-3 py-2"></th>
             <th className="border border-slate-600 px-3 py-2">Job Title</th>
             <th className="border border-slate-600 px-3 py-2">Next Execution</th>
             <th className="border border-slate-600 px-3 py-2">Last Execution</th>
@@ -25,13 +40,13 @@ export const ProxySchedulerTable = (props: Props) => {
           </tr>
         </thead>
         <tbody>
-          {props.schedules.map((schedule) => {
+          {state.map((schedule) => {
             return (
               <tr key={schedule.jobId}>
+                <td className="border border-slate-700 px-3 py-2 align-middle">
+                  <FaTrash className="cursor-pointer" onClick={() => removeSchedule(schedule.jobId)} />
+                </td>
                 <td className="border border-slate-700 px-3 py-2">
-                  <span className="inline-block cursor-pointer p-1" onClick={removeSchedule}>
-                    <SvgTrash />
-                  </span>
                   <TooltipProvider key={`tooltip-job-title-${schedule.jobId}`}>
                     <Tooltip>
                       <TooltipTrigger>
@@ -41,7 +56,7 @@ export const ProxySchedulerTable = (props: Props) => {
                             : schedule.jobTitle
                           : schedule.jobId}
                       </TooltipTrigger>
-                      <TooltipContent className="bg-white border border-solid rounded">{schedule.jobTitle}</TooltipContent>
+                      <TooltipContent className="rounded border border-solid bg-white">{schedule.jobTitle}</TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                   <span className="pl-3">

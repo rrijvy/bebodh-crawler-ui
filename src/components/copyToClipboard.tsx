@@ -1,6 +1,6 @@
 import React from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-import SvgCopy from "./../assets/svg/copy.svg";
+import { FaCopy } from "react-icons/fa6";
 
 type Props = {
   uniqueKey: string;
@@ -13,9 +13,9 @@ export const CopyToClipboard = (props: Props) => {
     <TooltipProvider key={`tooltip-${props.uniqueKey}`}>
       <Tooltip>
         <TooltipTrigger className="" onClick={(e) => navigator.clipboard.writeText(props.text)}>
-          <SvgCopy />
+          <FaCopy />
         </TooltipTrigger>
-        <TooltipContent className="bg-white border border-solid rounded">{props.tooltipText || "copy"}</TooltipContent>
+        <TooltipContent className="rounded border border-solid bg-white">{props.tooltipText || "copy"}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

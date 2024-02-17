@@ -34,4 +34,6 @@ export const apiRoutes = {
   runAmazonReviewScrapper: `${apiRouteBaseUrl}/AmazonCrawler/runAmazonReviewScrapper`,
   addOrUpdateProxyRetriverSchedule: `${apiRouteBaseUrl}/ProxyScheduler/AddOrUpdateProxyRetriverSchedule`,
   getAllRecurringSchedules: `${apiRouteBaseUrl}/ProxyScheduler/GetAllRecurringSchedules`,
+  deleteProxySchedule: `${apiRouteBaseUrl}/ProxyScheduler/DeleteProxySchedule`,
+  runGoogleMapScrapper: `${apiRouteBaseUrl}/GoogleMapCrawler/RunGoogleMapScrapper`,
 };
