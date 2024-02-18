@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiRoutes } from "./routes";
 import { LoginResponseSchema } from "./models/loginResponseSchema";
+import { format, formatISO } from "date-fns";
 
 export const {
   handlers: { GET, POST },
@@ -57,14 +58,22 @@ export const {
         param.token.email = param.user.email;
         param.token.username = param.user.user?.userName;
         if (param.user.expiresAt) {
-          param.token.expiresAt = new Date(param.user.expiresAt).getTime() / 1000;
+          param.token.expiresAt = new Date(param.user.expiresAt).getTime();
         }
       }
+
+      if (param.token.expiresAt && param.token.expiresAt < new Date().getTime()) {
+        return null;
+      }
+
       return param.token;
     },
     async session(param) {
       if ("token" in param) {
         param.session.token = param.token.token;
+        if (param.token.expiresAt && param.token.expiresAt < new Date().getTime()) {
+          return { expires: new Date().toString() };
+        }
       }
       if ("user" in param) {
         if (param.session.user) {
@@ -74,8 +83,9 @@ export const {
           param.session.username = param.user.user?.userName;
         }
       }
+
       return param.session;
     },
   },
-  debug: true,
+  debug: false,
 });
