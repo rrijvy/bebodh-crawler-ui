@@ -9,7 +9,7 @@ interface AxiosCustomHeaders {
 export class AxiosAuthInjector {
   static Add(instance: AxiosInstance): number {
     const onRequest = async (requestConfig: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig<AxiosCustomHeaders>> => {
-      var session = await getSession();
+      const session = await getSession();
       
       const authHeader: AxiosCustomHeaders = { authorization: "" };
 
