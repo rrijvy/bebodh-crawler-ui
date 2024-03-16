@@ -10,7 +10,7 @@ const ProxyScheduler = async () => {
 
   try {
     const recurringSchedulesResponse = await fetch(apiRoutes.getAllRecurringSchedules, { cache: "no-store" });
-    let recurringSchedules = (await recurringSchedulesResponse.json()) as RecurringScheduleSchema[];
+    recurringSchedules = (await recurringSchedulesResponse.json()) as RecurringScheduleSchema[];
   } catch (error) {}
 
   return (
