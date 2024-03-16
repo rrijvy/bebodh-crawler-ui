@@ -6,8 +6,13 @@ import { RecurringScheduleSchema } from "@/models/recurringScheduleSchema";
 import { apiRoutes } from "@/routes";
 
 const ProxyScheduler = async () => {
-  const recurringSchedulesResponse = await fetch(apiRoutes.getAllRecurringSchedules, { cache: "no-store" });
-  const recurringSchedules = (await recurringSchedulesResponse.json()) as RecurringScheduleSchema[];
+  let recurringSchedules: RecurringScheduleSchema[] = [];
+
+  try {
+    const recurringSchedulesResponse = await fetch(apiRoutes.getAllRecurringSchedules, { cache: "no-store" });
+    let recurringSchedules = (await recurringSchedulesResponse.json()) as RecurringScheduleSchema[];
+  } catch (error) {}
+
   return (
     <ReduxStoreProvider>
       <div className="flex flex-row">

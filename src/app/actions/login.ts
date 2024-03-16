@@ -13,7 +13,6 @@ export const Login = async (requestSchema: LoginRequestSchema) => {
       username: requestSchema.username,
       password: requestSchema.password,
     });
-
     return { success: true, userData };
   } catch (error) {
     if (error instanceof AuthError) {

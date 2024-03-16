@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { apiRoutes } from "./routes";
 import { LoginResponseSchema } from "./models/loginResponseSchema";
-import { format, formatISO } from "date-fns";
 
 export const {
   handlers: { GET, POST },
