@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SideNav } from "@/components/sideNav";
 import { auth } from "@/auth";
+import { Websocket } from "@/components/websocket";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {isAuthenticated && <Websocket />}
         {isAuthenticated && <SideNav />}
         <div className={isAuthenticated ? "body-wrapper" : ""}>{children}</div>
       </body>
