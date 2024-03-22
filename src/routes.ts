@@ -3,8 +3,7 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/dashboard"];
-// export const publicRoutes = ["/dashboard", "/proxyScheduler"];
+export const publicRoutes = ["/", "/dashboard"];
 
 /**
  * An array of routes that are used for authentication

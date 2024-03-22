@@ -22,9 +22,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {isAuthenticated && <Websocket />}
-        {isAuthenticated && <SideNav />}
-        <div className={isAuthenticated ? "body-wrapper" : ""}>{children}</div>
+        {/* {isAuthenticated && <Websocket />}
+        {isAuthenticated && <SideNav />} */}
+        {children}
       </body>
     </html>
   );
