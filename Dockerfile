@@ -8,5 +8,5 @@ ENV API_URL=http://localhost:28851/api
 ENV SOCKET_URL=wss://localhost:44364/ws
 ENV NEXT_PUBLIC_SOCKET_URL=wss://localhost:44364/ws
 ENV NEXTAUTH_SECRET="My custom Secret key for authentication."
-EXPOSE 3000:3000
+EXPOSE 3000
 CMD [ "npm", "run", "dev" ]
